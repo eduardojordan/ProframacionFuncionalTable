@@ -19,7 +19,10 @@ struct Item{
     let costoTotal: Int
 }
 
-let datos: [Item] = [
+// Se recomienda no tener variables sueltas en este caso las incluimos en un struct
+
+struct Datos {
+    static let datos: [Item] = [
     Item(nombre: "Papa", tipo: .verdura, costoTotal: 4),
     Item(nombre: "Pollo", tipo: .carne, costoTotal: 12),
     Item(nombre: "Zanahoria", tipo: .verdura, costoTotal: 5),
@@ -33,7 +36,7 @@ let datos: [Item] = [
 
 // Varios array en un array en lo que varian los datos
 
-let datosAnidados: [[Item]] = [
+    static let datosAnidados: [[Item]] = [
     [Item(nombre: "Papa", tipo: .verdura, costoTotal: 4), Item(nombre: "Zanahoria", tipo: .verdura, costoTotal: 5), Item(nombre: "Lechuga", tipo: .verdura, costoTotal: 8), Item(nombre: "Tomate", tipo: .verdura, costoTotal: 7) ],
     [Item(nombre: "Pollo", tipo: .carne, costoTotal: 12), Item(nombre: "Pescado", tipo: .carne, costoTotal: 9) ],
     [Item(nombre: "Manzana", tipo: .fruta, costoTotal: 7), Item(nombre: "Durazno", tipo: .fruta, costoTotal: 6)]
@@ -43,19 +46,15 @@ let datosAnidados: [[Item]] = [
 
 // datos en array con nill
 
-let datosAnidados2: [[Item?]] = [
+static let datosAnidados2: [[Item?]] = [
     [Item(nombre: "Papa", tipo: .verdura, costoTotal: 4), Item(nombre: "Zanahoria", tipo: .verdura, costoTotal: 5), Item(nombre: "Lechuga", tipo: .verdura, costoTotal: 8), Item(nombre: "Tomate", tipo: .verdura, costoTotal: 7) ],
     [Item(nombre: "Pollo", tipo: .carne, costoTotal: 12), Item(nombre: "Pescado", tipo: .carne, costoTotal: 9), nil ],
     [Item(nombre: "Manzana", tipo: .fruta, costoTotal: 7), Item(nombre: "Durazno", tipo: .fruta, costoTotal: 6), nil]
 ]
 
-
+}
 
 class ViewController: UIViewController {
-    
-
-    
-    
     
     //CREAMOS MODELO DENTRO DE LA CLASE
     
@@ -99,8 +98,7 @@ class ViewController: UIViewController {
     @IBAction func showAll(_ sender: Any) {
        // model = datos
        // model = datosAnidados.flatMap {$0}
-        
-        model = datosAnidados2.flatMap {$0.compactMap{$0}}
+          model = Datos.datosAnidados2.flatMap {$0.compactMap{$0}}
         
     }
     
@@ -109,10 +107,8 @@ class ViewController: UIViewController {
         
     // MANERA FUCIONAL---->>>>
       //  model = datos.filter({ $0.tipo == .fruta })
-        
-     //   model = datosAnidados.flatMap{$0}.filter({ $0.tipo == .fruta })
-        
-        model = datosAnidados2.flatMap{$0.compactMap{$0}}.filter({ $0.tipo == .fruta })
+      //  model = datosAnidados.flatMap{$0}.filter({ $0.tipo == .fruta })
+          model = Datos.datosAnidados2.flatMap{$0.compactMap{$0}}.filter({ $0.tipo == .fruta })
         
         // OTRA MANERA DE HACERLO
  
@@ -130,9 +126,8 @@ class ViewController: UIViewController {
     @IBAction func showVegetables(_ sender: Any) {
         
      //   model = datos.filter{ $0.tipo == .verdura
-   //     model = datosAnidados.flatMap{$0}.filter({ $0.tipo == .verdura })
-        
-        model = datosAnidados2.flatMap{$0.compactMap{$0}.filter{$0.tipo == .verdura}
+     //   model = datosAnidados.flatMap{$0}.filter({ $0.tipo == .verdura })
+          model = Datos.datosAnidados2.flatMap{$0.compactMap{$0}.filter{$0.tipo == .verdura}
         
         }
     }
@@ -143,14 +138,16 @@ class ViewController: UIViewController {
         
         
         //Asignamos los datos al modelo
-     //   model = datos
+      //   model = datos
+       
         // el el caso de los array dentro de arrays // El flat map aplana la data! por asidecirlo
       //  model = datosAnidados.flatMap{$0}
         
-        
-     //   Para eliminar los nil  del array
-        model = datosAnidados2.flatMap{$0.compactMap({$0})}
+       //   Para eliminar los nil del array
+           model = Datos.datosAnidados2.flatMap{$0.compactMap({$0})}
        
+          model = Datos.datos
+        
     }
 
 
